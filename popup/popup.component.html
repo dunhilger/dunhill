@@ -1,0 +1,22 @@
+<mat-card>
+  <h3 mat-dialog-title>{{description}}</h3>
+  <mat-dialog-content [formGroup]="buttonForm">
+    <mat-form-field color="warn" class="underline">
+      <input formControlName="buttonName" matInput type="text" placeholder="Enter Button Name" required>
+      <mat-hint>Max 8 characters</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field color="warn" class="underline">
+      <input formControlName="dividerNumber" matInput type="text" placeholder="Enter Button Divider" required>
+      <mat-hint>from 1 to 9</mat-hint>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-card-actions>
+    <button mat-stroked-button color="warn" [disabled]="!buttonForm.valid" (click)="addDivider()">+ Divider</button>
+    <button mat-stroked-button color="warn" [disabled]="!buttonForm.valid" (click)="addButton()">Accept</button>
+    <button mat-stroked-button color="warn" (click)="close()">Cancel</button>
+  </mat-card-actions>
+</mat-card>
+
+<p>Form Status: {{ buttonForm.status }}</p>
