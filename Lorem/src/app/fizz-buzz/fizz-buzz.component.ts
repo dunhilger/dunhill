@@ -34,12 +34,7 @@ export class FizzBuzzComponent implements OnInit {
   showFalse: number;
   inactiv: boolean;
 
-  constructor(private process: ProcessService, public dialog: MatDialog) {
-    this.showNum = 0;
-    this.showTrue = 0;
-    this.showFalse = 0;
-    this.inactiv = true;
-  };
+  constructor(private process: ProcessService, public dialog: MatDialog) { };
 
   createButton() {
     const dialogConfig = new MatDialogConfig();
@@ -48,7 +43,6 @@ export class FizzBuzzComponent implements OnInit {
     dialogConfig.data = {
       description: 'Create New Button'
     };
-    this.dialog.open(PopupComponent, dialogConfig);
     let dialogRef = this.dialog.open(PopupComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
       data => console.log("Dialog output:", data)
@@ -107,6 +101,10 @@ export class FizzBuzzComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.showNum = 0;
+    this.showTrue = 0;
+    this.showFalse = 0;
+    this.inactiv = true;
   };
 
 }

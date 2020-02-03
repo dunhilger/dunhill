@@ -1,0 +1,22 @@
+<mat-grid-list cols="3" rowHeight="20%" gutterSize="3px">
+    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows"
+        [style.background]="tile.color">
+        <mat-card>{{tile.title}}
+            <mat-card-title *ngIf="tile.displayNumber">{{showNum}}</mat-card-title>
+            <mat-card-title *ngIf="tile.counterTrue" matTooltip="right">{{showTrue}}</mat-card-title>
+            <mat-card-title *ngIf="tile.counterFalse" matTooltip="wrong">{{showFalse}}</mat-card-title>
+            <mat-card-content *ngIf="tile.displayButtons">
+                <p>
+                    <button mat-raised-button color="warn" matTooltip="click to start the game"
+                        (click)="generateNum(1, 300)">Start</button>
+                    <button [disabled]="inactiv" *ngFor="let button of buttons" mat-raised-button color="warn"
+                        (click)="processResult(button.divider)">
+                        {{button.title}}</button>
+                    <button mat-raised-button color="warn" (click)="resetNum()">Reset</button>
+                    <button mat-raised-button color="warn" matTooltip="click to create button"
+                        (click)="createButton()">+ Button</button>
+                </p>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>

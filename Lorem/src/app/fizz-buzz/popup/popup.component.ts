@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
@@ -7,23 +7,27 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
   templateUrl: './popup.component.html',
   styleUrls: ['./popup.component.css'],
 })
+
 export class PopupComponent implements OnInit {
   buttonForm: FormGroup;
-  dividerNumber: any;
+  dividerNumber: number;
   buttonName: string;
   description: string;
-
+  showArray: number;
+  divArray: number[];
+  dividerInoutValue = '';
+  
   constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<PopupComponent>, @Inject(MAT_DIALOG_DATA) data) {
     this.description = data.description;
+    this.divArray = [];
   };
 
   addDivider() {
-    let divArray =[];
-    this.dividerNumber = document.getElementsByTagName("input")[0].value;
-    if (divArray.length < 3) {
-      divArray.push(this.dividerNumber);
-    }
-    console.log(divArray);
+    let divider = this.buttonForm.value.dividerNumber;
+    this.divArray.push(Number(divider));
+    this.dividerInoutValue = '';
+    this.showArray = divider;
+    console.log(this.divArray);
   };
 
   addButton() {
@@ -44,3 +48,5 @@ export class PopupComponent implements OnInit {
     this.dialogRef.close();
   };
 }
+
+

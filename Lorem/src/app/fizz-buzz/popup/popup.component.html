@@ -1,5 +1,8 @@
 <mat-card>
-  <h3 mat-dialog-title>{{description}}</h3>
+  <h3 mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+    <mat-icon>zoom_out_map</mat-icon>
+    {{description}}
+  </h3>
   <mat-dialog-content [formGroup]="buttonForm">
     <mat-form-field color="warn" class="underline">
       <input formControlName="buttonName" matInput type="text" placeholder="Enter Button Name" required>
@@ -7,7 +10,7 @@
     </mat-form-field>
 
     <mat-form-field color="warn" class="underline">
-      <input formControlName="dividerNumber" matInput type="text" placeholder="Enter Button Divider" required>
+      <input [(value)] = dividerInoutValue formControlName="dividerNumber" matInput type="text" placeholder="Enter Button Divider" required>
       <mat-hint>from 1 to 9</mat-hint>
     </mat-form-field>
   </mat-dialog-content>
@@ -19,4 +22,5 @@
   </mat-card-actions>
 </mat-card>
 
-<p>Form Status: {{ buttonForm.status }}</p>
+<p>Form Status: {{buttonForm.status}}</p>
+<p>Entered Dividers: {{showArray}}</p>
