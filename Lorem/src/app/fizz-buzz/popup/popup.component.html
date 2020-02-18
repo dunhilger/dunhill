@@ -1,26 +1,42 @@
-<mat-card>
+<mat-card [formGroup]="buttonForm">
+
   <h3 mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
     <mat-icon>zoom_out_map</mat-icon>
     {{description}}
   </h3>
-  <mat-dialog-content [formGroup]="buttonForm">
+
+  <mat-dialog-content>
     <mat-form-field color="warn" class="underline">
       <input formControlName="buttonName" matInput type="text" placeholder="Enter Button Name" required>
       <mat-hint>Max 8 characters</mat-hint>
     </mat-form-field>
+  </mat-dialog-content>
 
+  <mat-dialog-content>
     <mat-form-field color="warn" class="underline">
-      <input [(value)] = dividerInoutValue formControlName="dividerNumber" matInput type="text" placeholder="Enter Button Divider" required>
+      <mat-chip-list #chipList aria-label="Divider selection">
+        <mat-chip *ngFor="let divider of dividers" 
+          [selectable]="selectable" 
+          [removable]="removable"
+          (removed)="remove(divider)">
+          {{divider}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New divider" type="number"
+          formControlName="dividerNumber"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
       <mat-hint>from 1 to 9</mat-hint>
     </mat-form-field>
   </mat-dialog-content>
 
   <mat-card-actions>
-    <button mat-stroked-button color="warn" [disabled]="!buttonForm.valid" (click)="addDivider()">+ Divider</button>
     <button mat-stroked-button color="warn" [disabled]="!buttonForm.valid" (click)="addButton()">Accept</button>
     <button mat-stroked-button color="warn" (click)="close()">Cancel</button>
   </mat-card-actions>
 </mat-card>
 
 <p>Form Status: {{buttonForm.status}}</p>
-<p>Entered Dividers: {{showArray}}</p>

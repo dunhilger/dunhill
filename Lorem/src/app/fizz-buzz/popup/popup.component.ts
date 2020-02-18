@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-popup',
@@ -13,39 +15,60 @@ export class PopupComponent implements OnInit {
   dividerNumber: number;
   buttonName: string;
   description: string;
-  showArray: number;
-  divArray: number[];
-  dividerInoutValue = '';
-  
-  constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<PopupComponent>, @Inject(MAT_DIALOG_DATA) data) {
+  dividerArray: number[];
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  dividers: number[];
+
+  constructor(private dialogRef: MatDialogRef<PopupComponent>, @Inject(MAT_DIALOG_DATA) data) {
+    this.buttonForm = new FormGroup({
+      'buttonName': new FormControl('', [Validators.required, Validators.pattern(/[A-Za-zА-Яа-яЁё]/), Validators.maxLength(8)]),
+      'dividerNumber': new FormControl('', [Validators.required, Validators.maxLength(3)])
+    }) 
     this.description = data.description;
-    this.divArray = [];
+    this.dividerArray = [];
+    this.dividers = [];
   };
 
-  addDivider() {
-    let divider = this.buttonForm.value.dividerNumber;
-    this.divArray.push(Number(divider));
-    this.dividerInoutValue = '';
-    this.showArray = divider;
-    console.log(this.divArray);
-  };
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if (value) {
+      this.dividers.push(Number(value));
+    }
+    if (input) {
+      input.value = '';
+    }
+    console.log(this.dividers);
+  }
+
+  remove(divider: number): void {
+    const index = this.dividers.indexOf(divider);
+    if (index >= 0) {
+      this.dividers.splice(index, 1);
+    }
+  }
+
+  // addDivider() {
+  //   let divider = this.buttonForm.value.dividerNumber;
+  //   this.dividerArray.push(Number(divider));
+  //   console.log(this.dividerArray);
+  // };
 
   addButton() {
     this.dialogRef.close(this.buttonForm.value);
     // console.log(this.buttonForm.value.dividerNumber);
   };
 
-  ngOnInit() {
-    this.buttonForm = this.fb.group({
-      description: [this.description, []],
-      buttonName: ['', [Validators.required, Validators.pattern(/[A-Za-zА-Яа-яЁё]/), Validators.maxLength(8)]],
-      dividerNumber: ['', [Validators.required, Validators.pattern(/[0-9]/), Validators.maxLength(1)]],
-    });
-    // this.buttonForm.valueChanges.subscribe((value) => console.log(value));
-  };
-
   close() {
     this.dialogRef.close();
+  }
+
+  ngOnInit() {
+    
   };
 }
 
