@@ -1,11 +1,3 @@
 .underline {
-  width: 260px;
+  width: 200px;
 };
-
-.mat-dialog-title .mat-icon {
-  top: 5px;
-  position: relative;
-  cursor: grab;
-};
-
-

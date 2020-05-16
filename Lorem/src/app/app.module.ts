@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatSelectModule } from '@angular/material/select';
 
 import { NavComponent } from './nav/nav.component';
 import { FizzBuzzComponent } from './fizz-buzz/fizz-buzz.component';
@@ -51,6 +52,7 @@ import { PopupComponent } from './fizz-buzz/popup/popup.component';
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,8 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatChipInputEvent } from '@angular/material/chips';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Button } from './button'
 
 @Component({
   selector: 'app-popup',
@@ -12,55 +11,41 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 export class PopupComponent implements OnInit {
   buttonForm: FormGroup;
-  dividerNumber: number;
   buttonName: string;
+  buttonDivider: number;
   description: string;
-  dividerArray: number[];
-  visible = true;
-  selectable = true;
-  removable = true;
-  addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   dividers: number[];
+  displayNumber: number;
+
+  buttons: Button[] = [
+    { title: '2', dividerValue: 2 },
+    { title: '7', dividerValue: 7 },
+    { title: '11', dividerValue: 11 },
+    { title: '13', dividerValue: 13 },
+    { title: '17', dividerValue: 17 },
+    { title: '19', dividerValue: 19 }
+  ];
 
   constructor(private dialogRef: MatDialogRef<PopupComponent>, @Inject(MAT_DIALOG_DATA) data) {
     this.buttonForm = new FormGroup({
-      'buttonName': new FormControl('', [Validators.required, Validators.pattern(/[A-Za-zА-Яа-яЁё]/), Validators.maxLength(8)]),
-      'dividerNumber': new FormControl('', [Validators.required, Validators.maxLength(3)])
-    }) 
+      'buttonName': new FormControl('MyButton', [Validators.required, Validators.pattern(/[A-Za-zА-Яа-яЁё]/), Validators.maxLength(8)]),
+      'buttonDivider': new FormControl([Validators.required]),
+    })
     this.description = data.description;
-    this.dividerArray = [];
-    this.dividers = [];
+    this.dividers = [3, 5];
   };
 
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-    if (value) {
-      this.dividers.push(Number(value));
-    }
-    if (input) {
-      input.value = '';
-    }
+  addDivider(dividerValue: number) {
+    this.dividers.push(dividerValue);
     console.log(this.dividers);
   }
 
-  remove(divider: number): void {
-    const index = this.dividers.indexOf(divider);
-    if (index >= 0) {
-      this.dividers.splice(index, 1);
-    }
-  }
-
-  // addDivider() {
-  //   let divider = this.buttonForm.value.dividerNumber;
-  //   this.dividerArray.push(Number(divider));
-  //   console.log(this.dividerArray);
-  // };
-
   addButton() {
-    this.dialogRef.close(this.buttonForm.value);
-    // console.log(this.buttonForm.value.dividerNumber);
+    let transferButton = {
+      titleButton: this.buttonForm.value.buttonName,
+      dividerButton: this.dividers
+    };
+    this.dialogRef.close(transferButton);
   };
 
   close() {
@@ -68,8 +53,6 @@ export class PopupComponent implements OnInit {
   }
 
   ngOnInit() {
-    
   };
 }
-
 

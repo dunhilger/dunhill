@@ -5,16 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class ProcessService {
 
-  public random(min, max): number {
+  public random(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  public result() {
-    
-  };
-
-  public pointCounter() {
-
   };
 
   constructor() { }
