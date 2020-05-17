@@ -36,16 +36,23 @@ export class PopupComponent implements OnInit {
   };
 
   addDivider(dividerValue: number) {
-    this.dividers.push(dividerValue);
+    if (this.dividers.length < 3) {
+      this.dividers.push(dividerValue);
+    } else {                               //else { this.dividers[2] = dividerValue; }
+      this.dividers.length = 2;
+      this.dividers.push(dividerValue);
+    }
     console.log(this.dividers);
-  }
+  };
 
   addButton() {
-    let transferButton = {
+    if (this.dividers.length === 3) {
+      let transferButton = {
       titleButton: this.buttonForm.value.buttonName,
       dividerButton: this.dividers
     };
     this.dialogRef.close(transferButton);
+    }
   };
 
   close() {
