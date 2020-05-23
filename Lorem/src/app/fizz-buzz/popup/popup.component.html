@@ -4,10 +4,10 @@
     <mat-icon>zoom_out_map</mat-icon>
     {{description}}
   </h3>
-  <form [formGroup]="buttonForm">
+  <form>
     <mat-dialog-content>
       <mat-form-field color="warn" class="underline">
-        <input formControlName="buttonName" matInput type="text" placeholder="Enter Button Name" required>
+        <input [formControl]="buttonName" matInput type="text" placeholder="Enter Button Name" required>
         <mat-hint>Max 8 characters</mat-hint>
       </mat-form-field>
     </mat-dialog-content>
@@ -15,7 +15,7 @@
     <mat-card-content>
       <mat-form-field color="warn" class="underline">
         <mat-label>Dividers</mat-label>
-        <mat-select matNativeControl required formControlName="buttonDivider">
+        <mat-select matNativeControl required>
           <mat-option *ngFor="let button of buttons" [value]="button.dividerValue"
             (click)="addDivider(button.dividerValue)">
             {{button.title}}</mat-option>
@@ -25,10 +25,9 @@
   </form>
 
   <mat-card-actions>
-    <button mat-stroked-button color="warn" [disabled]="!buttonForm.valid" (click)="addButton()">Accept</button>
-    <button mat-stroked-button color="warn" (click)="close()">Cancel</button>
+    <button mat-stroked-button color="warn" [disabled]="!buttonName.valid" (click)="addButton()">Accept</button>
+    <button mat-stroked-button color="warn" (click)="closePopup(result)">Cancel</button>
   </mat-card-actions>
-
+  
 </mat-card>
 
-<p>Form Status: {{buttonForm.status}}</p>

@@ -19,7 +19,7 @@ export class FizzBuzzComponent implements OnInit {
     { title: '', cols: 1, rows: 1, color: 'gray', displayButtons: false, displayNumber: false, counterTrue: true, counterFalse: false },
     { title: '', cols: 1, rows: 1, color: 'gray', displayButtons: false, displayNumber: false, counterTrue: false, counterFalse: true },
     { title: '', cols: 3, rows: 1, color: 'gray', displayButtons: true, displayNumber: false, counterTrue: false, counterFalse: false },
-    { title: 'Footer/rules', cols: 3, rows: 1, color: 'gray', displayButtons: false, displayNumber: false, counterTrue: false, counterFalse: false }
+    { title: '', cols: 3, rows: 1, color: 'gray', displayButtons: false, displayNumber: false, counterTrue: false, counterFalse: false }
   ];
 
   getDefaultButtons() {
@@ -50,7 +50,13 @@ export class FizzBuzzComponent implements OnInit {
     };
     let dialogRef = this.dialog.open(PopupComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
-      data => this.buttons.splice(3, 0, { title: data.titleButton, divider: data.dividerButton })
+      data => {
+        if (data === false) {
+          this.activ = false;
+        } else {
+          this.buttons.splice(3, 0, { title: data.titleButton, divider: data.dividerButton });
+        }
+      }
     );
     this.activ = true;
   };
@@ -111,7 +117,7 @@ export class FizzBuzzComponent implements OnInit {
     this.generateNum(1, 300);
   };
 
-  resetNum() {
+  reset() {
     this.showNum = 0;
     this.showTrue = 0;
     this.showFalse = 0;
